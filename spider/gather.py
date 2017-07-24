@@ -4,11 +4,11 @@ import re
 import time
 import sys
 import requests
-
-from  spider.logs.logger import logger
+sys.path.append('..')
+from spider.logs.logger import logger
 
 gzlist = []
-file_seeds = open('../wechatuser/new.txt', 'r')
+file_seeds = open('../wechatuser/mj.txt', 'r')
 for line in file_seeds:
     gzlist.append(line.replace("\n", ""))
 logger.info(gzlist)
@@ -29,7 +29,7 @@ if (len(token) == 0):
     logger.error('cookie 无效，请重新登录获取cookie!')
     sys.exit(0)
 for query in gzlist:
-    logger.info('开始采集公众号=========>：', query)
+    logger.info('开始采集公众号=========>：' + query)
     urls_file = open('url/urls_' + query + '.txt', 'a+', encoding='utf-8')
     query_id = {
         'action': 'search_biz',
@@ -81,7 +81,7 @@ for query in gzlist:
             'fakeid': fakeid,
             'type': '9'
         }
-        logger.info('翻页###################begin=', begin)
+        logger.info('翻页###################begin=' + str(begin))
         try:
             query_fakeid_response = requests.get(appmsg_url, cookies=cookies, headers=header, params=query_id_data)
             fakeid_list = query_fakeid_response.json().get('app_msg_list')
@@ -95,4 +95,4 @@ for query in gzlist:
         except:
             logger.error('采集异常！！！！！！！')
     urls_file.close()
-    logger.info('完成采集公众号=========>：', query)
+    logger.info('完成采集公众号=========>：' + query)

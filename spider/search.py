@@ -8,7 +8,7 @@ from spider import headers
 
 from  spider.logs.logger import logger
 gzlist = []
-file_seeds = open('keyword.txt', 'r',encoding='utf-8')
+file_seeds = open('../wechatuser/keyword.txt', 'r',encoding='utf-8')
 for line in file_seeds:
     gzlist.append(line.replace("\n", ""))
 logger.info(gzlist)
@@ -27,7 +27,7 @@ response = requests.get(url=url, cookies=cookies)
 token = re.findall(r'token=(\d+)', str(response.url))[0]
 
 def searchPage(kw, begin, count):
-    logger.info('开始search关键词=========>：' + str(begin) + ':', kw)
+    logger.info('开始search关键词=========>：' + str(begin) + ':'+ kw)
     biz_file = open('biz/biz_' + kw + '.txt', 'a+', encoding='utf-8')
     biz_file_json = open('biz/biz_' + kw + '.json', 'a+', encoding='utf-8')
     query_id = {
@@ -48,22 +48,26 @@ def searchPage(kw, begin, count):
     for item in lists:
         json_str = json.dumps(item,ensure_ascii=False)
         logger.info(json_str)
-        biz_file.write(item.get('fakeid') + '\n')
+        alias = item.get('alias')
+        if alias == '':
+            alias = item.get('nickname')
+        biz_file.write(alias + '\n')
+        biz_file.flush()
         biz_file_json.write(json_str + '\n')
-    num = int(int(max_num) / 5)
+        biz_file_json.flush()
     begin = int(begin)
     while max_num > begin:
         time.sleep(10)
-        # query_id['begin'] = '{}'.format(str(begin));
-        logger.info('翻页###################begin=', begin)
+        logger.info('翻页###################begin='+ str(begin))
         try:
             begin += 5
             searchPage(kw, begin, 5)
-            num -= 1
         except:
             logger.error('采集异常！！！！！！！')
+    biz_file.flush()
     biz_file.close()
+    biz_file_json.flush()
     biz_file_json.close()
 for query in gzlist:
-    searchPage(query, 0, 5)
-    logger.info('完成采集公众号=========>：', query)
+    searchPage(query, 265, 5)
+    logger.info('完成采集公众号=========>：'+ query)
