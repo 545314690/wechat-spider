@@ -1,9 +1,9 @@
 import json
-import random
 import re
 import time
 import sys
 import requests
+import random
 sys.path.append('..')
 from spider.logs.logger import logger
 
@@ -91,7 +91,7 @@ for query in gzlist:
             num -= 1
             begin = int(begin)
             begin += 5
-            time.sleep(8)
+            time.sleep(random.randint(10,40))
         except:
             logger.error('采集异常！！！！！！！')
     urls_file.close()
