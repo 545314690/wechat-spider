@@ -5,7 +5,7 @@ import sys
 import requests
 import random
 sys.path.append('..')
-from spider.logs.logger import logger
+from spider.logger.logger import logger
 
 gzlist = []
 file_seeds = open('../wechatuser/mj.txt', 'r')

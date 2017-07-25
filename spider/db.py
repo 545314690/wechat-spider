@@ -36,7 +36,7 @@ class WeChat(Base):
     url = Column(String(255), nullable=False)
     title = Column(String(50), nullable=False)
     content = Column(String(1000))
-    pubTime = Column(DateTime)
+    publish_time = Column(DateTime)
 
 
 # 登录用户
@@ -49,5 +49,5 @@ class LoginUser(Base):
     enable = Column(Boolean, default=True)
 
 
-Base.metadata.create_all(engine)  # 创建表
-# Base.metadata.drop_all(engine)   #删除表
+#Base.metadata.create_all(engine)  # 创建表
+Base.metadata.drop_all(engine)   #删除表
