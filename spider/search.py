@@ -6,7 +6,8 @@ import time
 import requests
 from spider import headers
 
-from  spider.logger.logger import logger
+# from  spider.logger.logger import logger
+from spider.logs.logger import logger
 gzlist = []
 file_seeds = open('../wechatuser/keyword.txt', 'r',encoding='utf-8')
 for line in file_seeds:

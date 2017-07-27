@@ -5,7 +5,7 @@ import sys
 import requests
 import random
 sys.path.append('..')
-from spider.logger.logger import logger
+from spider.logs.logger import logger
 
 gzlist = []
 file_seeds = open('../wechatuser/mj.txt', 'r')
@@ -91,7 +91,7 @@ for query in gzlist:
             num -= 1
             begin = int(begin)
             begin += 5
-            time.sleep(random.randint(10,40))
+            time.sleep(random.randint(10,15))
         except:
             logger.error('采集异常！！！！！！！')
     urls_file.close()
